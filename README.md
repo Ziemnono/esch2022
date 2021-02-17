@@ -7,4 +7,5 @@ crontab -e
 ```
 ```
 * * * * * $PYTHON_PATH$ $FILE_PATH$/main.py >> $FILE_PATH$/cron.log 2>&1
+minute hour day month year
 ```
