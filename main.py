@@ -1,7 +1,11 @@
 import os
 import urllib.request
 import xml.etree.ElementTree as et
+
 import pandas as pd
+
+
+# from lxml import etree as et
 
 
 def read_url(url, xml_filename):
@@ -23,26 +27,37 @@ def read_url(url, xml_filename):
 
 def read_xml(xml_filename):
     # Check if the file exists, parse the file and extract the relevant data
-    # return a 2 dimensional list without "header"
+    # return a dictionary with the correct elements
 
     if not os.path.exists(xml_filename):
         return
     tree = et.parse(xml_filename)
     root = tree.getroot()
-    # print(et.tostring(root, encoding='utf8').decode('utf8'))
-    # for elem in root.iter():
-    #     print(elem.tag, elem.attrib, elem.text)
 
-    dict_keys = ["publicationTime", "latitude"]  # all keys to be extracted from xml
+    keys = ["publicationTime", "latitude", "longitude", "vehicleFlowRate"]  # all keys to be extracted from xml
+    latitude_key = ["49.50394", "49.50413", "49.501606", "49.501408"]  # the desired latitude
+    longitude_key = ["5.9460163", "5.9458966", "5.9444437", "5.9445815"]  # the desired longitude
     dict = {}
-    counter = 0
+    count = 0  # count to simply avoid to have 2 identical keys, it will change maybe later on
+    take_next = False  # variable indicating that if we find a longitude or latitude present in our key then we can take
+    # the next key otherwise we pass to the next longitude or latitude
+
     for elem in root.iter():
-        for keys in dict_keys:
-            if elem.tag == keys:
-                if keys in dict:
-                    keys += "_" + str(counter)
-                    counter += 1
-                dict[keys] = elem.text
+        if elem.tag == keys[0]:
+            dict[keys[0]] = elem.text
+        if elem.tag == keys[1] and elem.text in latitude_key:
+            dict[keys[1] + " " + str(count)] = elem.text
+            take_next = True
+        elif elem.tag == keys[1]:
+            take_next = False
+        if elem.tag == keys[2] and elem.text in longitude_key:
+            dict[keys[2] + " " + str(count)] = elem.text
+            take_next = True
+        elif elem.tag == keys[2]:
+            take_next = False
+        if elem.tag == keys[3] and take_next:
+            dict[keys[3] + " " + str(count)] = elem.text
+            count += 1
     return dict
 
 
