@@ -1,7 +1,6 @@
 import os
 import urllib.request
 import xml.etree.ElementTree as et
-
 import pandas as pd
 
 
@@ -23,8 +22,8 @@ def read_url(url, xml_filename):
 
 
 def read_xml(xml_filename):
-    # Checks if file exists, parses the file and extracts the needed data
-    # returns a 2 dimensional list without "header"
+    # Check if the file exists, parse the file and extract the relevant data
+    # return a 2 dimensional list without "header"
 
     if not os.path.exists(xml_filename):
         return
@@ -48,7 +47,7 @@ def read_xml(xml_filename):
 
 
 def to_excel(dict, xlsx_filename):
-    # Generates excel file with given data
+    # Generate an excel file with the given data
     df = pd.DataFrame(data=dict, index=[0])
 
     if not os.path.exists(xlsx_filename):
