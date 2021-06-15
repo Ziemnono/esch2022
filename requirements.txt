@@ -1,2 +1,4 @@
 pandas==1.1.2
 openpyxl==3.0.6
+xlsxwriter==1.4.3
+
