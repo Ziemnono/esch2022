@@ -4,7 +4,7 @@ Traffic road data collection for Esch 2022 event
 This program has been built for downloading a xml file giving road traffic information
 in Luxembourg. Then relevant features can be extracted into a xlsx file for post-treatment.
 
-# Deployment on Ubuntu Ubuntu 20.04.2 LTS, 64-bit, Python 3.8.5 
+# Deployment on Ubuntu 20.04.2 LTS, 64-bit, Python 3.8.5 
 
 Prerequisite: Installation of Python 3 environment:
 To download the requirements
